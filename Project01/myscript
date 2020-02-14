@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-for f in $(find . -name "*")
-	do
-		if tail -f -n 1 $f | grep -q "#FIXME"; 
-		then echo $f 
-		fi
-done
-exit 1

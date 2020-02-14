@@ -1,36 +1,34 @@
 #!/bin/bash
 
-if ["$arg" == null ] 
-then
-	echo "Please reference the README for instructions on execution"
-else
+	for arg in "$@"
 
-for arg in "$@"
+	do
 
-do
-
-    if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
-    then
-        echo "Help argument detected."
-    fi
+    		if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
+    		then
+        		echo "Please reference the README for instructions on how to run this script.."
+    		fi
 
 
-    if [ "$arg" == "fixme" ]
-    then
-	echo "test1"
-    fi
+    		if [ "$arg" == "fixme" ]
+    		then
+			find . -type f -print0 | while tail -n 1 $
+			do 
+				# print every file
+				echo >> $file 
+			done				
+    		fi
 
 
-    if [ "$arg" == "merge" ]
-    then 
-	echo "test2"
-    fi
+    		if [ "$arg" == "merge" ]
+    		then 
+			git log --all --grep='merge' -n 1 | grep -e ".{40}" | git checkout
+    		fi
 
 
-    if [ "$arg" == "list" ]
-    then 
-	ls -l --block-size=M -S
-    fi 
-fi
+    		if [ "$arg" == "list" ]
+    		then 
+			ls -a -l --block-size=M -S
+    	fi 
 done
 
