@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if ["$arg" == null ] 
+then
+	echo "Please reference the README for instructions on execution"
+else
+
+for arg in "$@"
+
+do
+
+    if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
+    then
+        echo "Help argument detected."
+    fi
+
+
+    if [ "$arg" == "fixme" ]
+    then
+	echo "test1"
+    fi
+
+
+    if [ "$arg" == "merge" ]
+    then 
+	echo "test2"
+    fi
+
+
+    if [ "$arg" == "list" ]
+    then 
+	ls -l --block-size=M -S
+    fi 
+fi
+done
+
