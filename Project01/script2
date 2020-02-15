@@ -4,31 +4,26 @@
 
 	do
 
-    		if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
-    		then
-        		echo "Please reference the README for instructions on how to run this script.."
-    		fi
+    		if [ "$arg" == "feature02" ] ;
+		then
+			for file in $(find . -type f) ; do
+				lastline=$(tail -n -1 "$file")
+				if [[ $lastline == *"#FIXME"* ]] ; then
+					echo "$file" >> fixme.log
+    				fi
+			done
+		fi
 
 
-    		if [ "$arg" == "fixme" ]
-    		then
-			find . -type f -print0 | while tail -n 1 $
-			do 
-				# print every file
-				echo >> $file 
-			done				
-    		fi
-
-
-    		if [ "$arg" == "merge" ]
+    		if [ "$arg" == "feature03" ] ;
     		then 
 			git log --all --grep='merge' -n 1 | grep -e ".{40}" | git checkout
     		fi
 
 
-    		if [ "$arg" == "list" ]
+    		if [ "$arg" == "feature04" ] ;
     		then 
-			ls -a -l --block-size=M -S
+			ls -a -lhS
     	fi 
 done
 
