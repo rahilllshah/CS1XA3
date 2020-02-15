@@ -1,17 +1,22 @@
 #!/bin/bash
-
+i=0
         for arg in "$@"
-
         do
-
                 if [ "$arg" == "feature02" ] ;
                 then
                         for file in $(find . -type f) ; do
-                                lastline=$(tail -n -1 "$file")
+                                i=0
+				lastline=$(tail -n -1 "$file")
                                 if [[ $lastline == *"#FIXME"* ]] ; then
-                                        echo "$file" >> fixme.log
-                                fi
+                                	if  [[ i == 0 ]] ; then       
+						 echo "$file" > fixme.log
+						((i++))
+					else
+						echo "$file" >> fixme.log
+                                	fi
+				fi
                         done
+		i=0
                 fi
 
 
