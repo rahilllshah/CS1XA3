@@ -1,7 +1,7 @@
 #!/bin/bash
 i=0
-        for arg in "$@"
-        do
+	for arg in "$@"
+	do
                 if [ "$arg" == "feature02" ] ;
                 then
                         for file in $(find . -type f) ; do
@@ -29,7 +29,7 @@ i=0
                 if [ "$arg" == "feature04" ] ;
                 then 
                         ls -a -lhS
-        fi 
-done
+        	fi 
+	done
 
 
