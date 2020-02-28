@@ -1,5 +1,6 @@
 #!/bin/bash
 i=0
+j=0
 	for arg in "$@"
 	do
                 if [ "$arg" == "feature02" ] ;
@@ -48,25 +49,52 @@ i=0
 			read tag
 			
 			for file2 in $(find .. -name "*.py") ; do
-				grep '#*\|"$tag"' "$file2" >> "$tag".log 
+				grep '#*\|"$tag"' "$file2" > "$tag".log 	
 			done		
                 fi
 
 
 		if [ "$arg" == "feature07" ] ;
                 then
-                
 			echo "Please enter your option, either Backup or Restore"
 			read dec
 			
+			if [ $dec = "Backup" ] ;
+			then 
+				if [ -d backup ] ; 
+				then	
+					rm -rf backup/*
+					echo "Execute rest of code"
+				else
+					mkdir backup
+					echo "hi"
+					for file3 in $(find . -name "*.tmp") ; do	
+						mv $file3 backup
 
+					done
+				fi
+
+			elif [ $dec = "Restore" ] ; 
+			then
+				if [ -f restore.log ] ;
+				then 
+					echo "it exists"
+				else
+					echo "This file does not exist"
+				fi
+			fi
 		fi
 
 
 		if [ "$arg" == "custom01" ] ;
                 then
-                        echo "Hi"
-                fi
+                        echo "Please enter the size benchmark of the files you'd like to delete."
+			read size
+			echo "Would you like to see files greater or smaller than this size?":
+                	read gre
+			
+			
+		fi
 
 
 		if [ "$arg" == "custom02" ] ;
