@@ -47,16 +47,16 @@ j=0
                         echo "Please enter a Tag"
 			cd .
 			read tag
-			
+	
 			for file2 in $(find .. -name "*.py") ; do
-				grep '#*\|"$tag"' "$file2" > "$tag".log 	
+				grep "#*" "$file2" | grep ""$tag"" >> "$tag".log 	
 			done		
                 fi
 
 
 		if [ "$arg" == "feature07" ] ;
                 then
-			echo "Please enter your option, either Backup or Restore"
+			echo "Please enter your option, either [Backup] or [Restore]"
 			read dec
 			
 			if [ $dec = "Backup" ] ;
@@ -64,23 +64,31 @@ j=0
 				if [ -d backup ] ; 
 				then	
 					rm -rf backup/*
-					echo "Execute rest of code"
+					for file3 in $(find . -name "*.tmp") ; do       
+                                                pwd "$file3"  >> backup/restore.log 
+                                                mv "$file3" backup 
+                                        done
 				else
 					mkdir backup
-					echo "hi"
-					for file3 in $(find . -name "*.tmp") ; do	
-						mv $file3 backup
-
-					done
+					for file3 in $(find . -name "*.tmp") ; do       
+                                                pwd "$file3" >> backup/restore.log 
+                                                mv "$file3" backup 
+                                        done
 				fi
 
 			elif [ $dec = "Restore" ] ; 
 			then
-				if [ -f restore.log ] ;
+				if [ -f backup/restore.log ] ;
 				then 
 					echo "it exists"
+					j=0
+					for file4 in $(find backup -name "*.tmp") ; do
+						((j++))
+						path=$(sed -n "$j"p backup/restore.log)
+						mv "$file4" "$path"
+					done
 				else
-					echo "This file does not exist"
+					echo "ERROR: This file does not exist"
 				fi
 			fi
 		fi
@@ -88,18 +96,39 @@ j=0
 
 		if [ "$arg" == "custom01" ] ;
                 then
-                        echo "Please enter the size benchmark of the files you'd like to delete."
-			read size
-			echo "Would you like to see files greater or smaller than this size?":
-                	read gre
+                        echo "Would you like to see files [Bigger] or [Smaller] than 1MB?"
+			read gre
+			if [ $gre = "Bigger" ] ;
+			then
+				find .. -type f -size +1048576c "$var"
+				ls "$var"
+				echo "Would you like to zip these files? [Yes] or [No]"
 			
-			
-		fi
+			elif [ gre = "Smaller" ] ;
+			then
+				find . -type f -size -1048676c
+			fi
+		fi	
 
 
 		if [ "$arg" == "custom02" ] ;
                 then
-                        echo "Hi"
+                        echo "Please choose which aisle you would like to shop in, [Vegetables], [Cookies]"
+			read choice
+			if [ $choice = "Vegetables" ] ; 
+			then
+				cat Vegetables
+				sed -n -e  1p -e 2p Vegetables
+				echo "Type [1] if you want the first item. [2] if you want the second item"
+				read cart1
+				if [ $cart1 = "1" ] ;
+				then 
+					tail -c 3 Vegetables  >> cart.txt
+				elif [ $cart1 = "2" ] ;
+				then
+					tail -c 3 Vegetables >> cart.txt
+				fi				 
+			fi
                 fi
 	done
 
