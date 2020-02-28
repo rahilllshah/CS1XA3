@@ -29,7 +29,50 @@ i=0
                 if [ "$arg" == "feature04" ] ;
                 then 
                         ls -a -lhS
-        	fi 
+        	fi
+
+ 		
+		if [ "$arg" == "feature05" ] ;
+		then
+			echo "Please enter a file extension"
+			read ext
+			cd ..
+			ls *.$ext | wc -l
+		fi
+
+
+		if [ "$arg" == "feature06" ] ;
+                then
+                        echo "Please enter a Tag"
+			cd .
+			read tag
+			
+			for file2 in $(find .. -name "*.py") ; do
+				grep '#*\|"$tag"' "$file2" >> "$tag".log 
+			done		
+                fi
+
+
+		if [ "$arg" == "feature07" ] ;
+                then
+                
+			echo "Please enter your option, either Backup or Restore"
+			read dec
+			
+
+		fi
+
+
+		if [ "$arg" == "custom01" ] ;
+                then
+                        echo "Hi"
+                fi
+
+
+		if [ "$arg" == "custom02" ] ;
+                then
+                        echo "Hi"
+                fi
 	done
 
 
