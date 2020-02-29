@@ -29,7 +29,7 @@ j=0
 
                 if [ "$arg" == "feature04" ] ;
                 then 
-                        ls -a -lhS
+                        ls .. -a -lhS | grep -v '^d'
         	fi
 
  		
@@ -124,7 +124,23 @@ j=0
 
 			elif [ gre = "Smaller" ] ;
 			then
-				find . -type f -size -1048676c
+				for file5 in $(find .. -type f -size -1M) ; do
+                                        cp "$file5" zip
+                                        echo "$file5" >> ziplog.log
+                                        echo "$file5"
+                                done
+                                
+                                printf "\nFiles added on $(date)"  >> ziplog.log
+                                echo "Would you like to zip these files? [Yes] or [No]"
+                                read gre2
+                                
+                                if [ $gre2 = "Yes" ] ; 
+                                then
+                                        zip -9 compressed.zip zip
+                                elif [ $gre2 = "No" ] ;
+                                then
+                                        echo "No problem, thanks for using this feature!"
+                                fi
 			fi
 		fi	
 
@@ -132,7 +148,7 @@ j=0
 		if [ "$arg" == "custom02" ] ;
                 then
 				
-				echo "Welcome to the supermarket! Your current total is 0. If you would like to start shopping, type [Shop]"
+				echo "Welcome to the Supermarket! Your current total is 0. If you would like to start shopping, type [Shop]"
 				read  choice2
 				change=0
 				while [ $choice2 = "Shop" ] 
