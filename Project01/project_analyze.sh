@@ -131,53 +131,104 @@ j=0
 
 		if [ "$arg" == "custom02" ] ;
                 then
-				cat Supermarket
-				sed -n -e  1p -e 2p Supermarket
-				echo "Type [1] if you want the first item. [2] if you want the second item"
-				read cart1
-				if [ $cart1 = "1" ] ;
-				then 
-					sed -n 1p Supermarket >> cart
-					change=$(( $change + 2.69 ))					
-
-				elif [ $cart1 = "2" ] ;
-				then
-					sed -n 2p Supermarket >> cart
-				fi				 
-			fi
-			echo "Your total is $change. If you would you like to checkout, type [Yes]. If you would like to keep shopping, type [No]"
-			read choice2
-			if [ $choice2 = "Yes" ] ; 
-			then 
-				dollars=0
-				quarters=0
-				cents=0
 				
-				while [  $change -ge 1 ]
+				echo "Welcome to the supermarket! Your current total is 0. If you would like to start shopping, type [Shop]"
+				read  choice2
+				change=0
+				while [ $choice2 = "Shop" ] 
 				do 
-					dollars=$(( $dollars++ ))
-					change=$(( $change - 1 ))
-				done
-	
-				while [  $change -ge 0.25 ] 
-                                do 
-                                        quarters=$(( $quarters++ ))
-                                        change=$(( $change - 0.25 ))
-                                done
 
-				while [  $change -ge 0.01 ] 
-                                do 
-                                        cents=$(( $quarters++ ))
-                                        change=$(( $change - 0.01 ))
-                                done
+					cat Supermarket
+                                        echo "Type [1] if you want the first item. [2] if you want the second item, etc. Type [Checkout] if you would like to checkout."
+                                        read cart1
+                                                if [ $cart1 = "1" ] ;
+                                                then 
+                                                        sed -n 1p Supermarket >> cart
+                                                        change=$(( $change + 367 ))
+                                        		echo "Your total is $change"
 
-				echo "The most efficient change for this amount would be Dollars, $dollars Quarters, $quarters Cents, $cents"				
-                	else 
-				
+                                                elif [ $cart1 = "2" ] ;
+                                                then
+                                                        sed -n 2p Supermarket >> cart
+							change=$(( $change + 397 ))
+							echo "Your total is $change"                                                                               
 
+						elif [ $cart1 = "3" ] ;
+                                                then
+                                                        sed -n 3p Supermarket >> cart
+                                                        change=$(( $change + 592 ))
+							echo "Your total is $change"
 
+						elif [ $cart1 = "4" ] ;
+                                                then
+                                                        sed -n 4p Supermarket >> cart
+                                                        change=$(( $change + 253 ))
+							echo "Your total is $change"
+						
+						elif [ $cart1 = "5" ] ;
+                                                then
+                                                        sed -n 5p Supermarket >> cart
+                                                        change=$(( $change + 401 ))
+							echo "Your total is $change"
+						
+						elif [ $cart1 = "6" ] ;
+                                                then
+                                                        sed -n 6p Supermarket >> cart
+                                                        change=$(( $change + 219 ))
+							echo "Your total is $change"
+													
+						elif [ $cart1 = "7" ] ;
+                                                then
+                                                        sed -n 7p Supermarket >> cart
+                                                        change=$(( $change + 294 ))
+							echo "Your total is $change"
+						
+						elif [ $cart1 = "8" ] ;
+                                                then
+                                                        sed -n 8p Supermarket >> cart
+                                                        change=$(( $change + 397 ))
+							echo "Your total is $change"
 
-			fi
+						elif [ $cart1 = "9" ] ;
+                                                then
+                                                        sed -n 9p Supermarket >> cart
+                                                        change=$(( $change + 201 ))			
+							echo "Your total is $change"
+						
+						elif [ $cart1 = "Checkout" ] ;
+						then
+							dollars=0
+                                        		quarters=0
+                                        		cents=0
+                                
+                                        		while [  $change -ge 100 ] 
+                                        		do 
+                                                		dollars=$(( $dollars + 1 ))
+                                               			change=$(( change - 100 ))
+								
+                                        		done
+        
+                                        		while [  $change -ge 25 ] 
+                                        		do 
+                                                		quarters=$(( $quarters + 1 ))
+                                                		change=$(( change - 25 ))
+								
+                                        		done
+
+                                        		while [  $change -ge 1 ]  
+                                        		do 
+                                                		cents=$(( $cents + 1 ))
+                                                		change=$(( change - 1 ))
+								
+                                        		done
+							
+							echo "The most efficient change for your total would be $dollars Dollars, $quarters Quarters, $cents Cents"
+							break						
+						fi
+				done	
+		fi
 	done
+
+
 
 
