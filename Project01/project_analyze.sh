@@ -96,7 +96,9 @@ j=0
 
 		if [ "$arg" == "custom01" ] ;
                 then
-                        mkdir zip
+                        rm ziplog.log
+			rm -rf zip/*
+			mkdir zip
 			echo "Would you like to see files [Bigger] or [Smaller] than 1MB?"
 			read gre
 			if [ $gre = "Bigger" ] ;
@@ -107,10 +109,18 @@ j=0
 					echo "$file5" >> ziplog.log
 					echo "$file5"
 				done
+				
 				printf "\nFiles added on $(date)"  >> ziplog.log
 				echo "Would you like to zip these files? [Yes] or [No]"
+				read gre2
 				
-
+				if [ $gre2 = "Yes" ] ; 
+				then
+					zip -9 compressed.zip zip
+				elif [ $gre2 = "No" ] ;
+				then
+					echo "No problem, thanks for using this feature!"
+				fi
 
 			elif [ gre = "Smaller" ] ;
 			then
@@ -121,23 +131,53 @@ j=0
 
 		if [ "$arg" == "custom02" ] ;
                 then
-                        echo "Please choose which aisle you would like to shop in, [Vegetables], [Cookies]"
-			read choice
-			if [ $choice = "Vegetables" ] ; 
-			then
-				cat Vegetables
-				sed -n -e  1p -e 2p Vegetables
+				cat Supermarket
+				sed -n -e  1p -e 2p Supermarket
 				echo "Type [1] if you want the first item. [2] if you want the second item"
 				read cart1
 				if [ $cart1 = "1" ] ;
 				then 
-					tail -c 3 Vegetables  >> cart.txt
+					sed -n 1p Supermarket >> cart
+					change=$(( $change + 2.69 ))					
+
 				elif [ $cart1 = "2" ] ;
 				then
-					tail -c 3 Vegetables >> cart.txt
+					sed -n 2p Supermarket >> cart
 				fi				 
 			fi
-                fi
+			echo "Your total is $change. If you would you like to checkout, type [Yes]. If you would like to keep shopping, type [No]"
+			read choice2
+			if [ $choice2 = "Yes" ] ; 
+			then 
+				dollars=0
+				quarters=0
+				cents=0
+				
+				while [  $change -ge 1 ]
+				do 
+					dollars=$(( $dollars++ ))
+					change=$(( $change - 1 ))
+				done
+	
+				while [  $change -ge 0.25 ] 
+                                do 
+                                        quarters=$(( $quarters++ ))
+                                        change=$(( $change - 0.25 ))
+                                done
+
+				while [  $change -ge 0.01 ] 
+                                do 
+                                        cents=$(( $quarters++ ))
+                                        change=$(( $change - 0.01 ))
+                                done
+
+				echo "The most efficient change for this amount would be Dollars, $dollars Quarters, $quarters Cents, $cents"				
+                	else 
+				
+
+
+
+			fi
 	done
 
 
