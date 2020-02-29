@@ -80,7 +80,6 @@ j=0
 			then
 				if [ -f backup/restore.log ] ;
 				then 
-					echo "it exists"
 					j=0
 					for file4 in $(find backup -name "*.tmp") ; do
 						((j++))
@@ -88,7 +87,7 @@ j=0
 						mv "$file4" "$path"
 					done
 				else
-					echo "ERROR: This file does not exist."
+					echo "ERROR: This file does not exist"
 				fi
 			fi
 		fi
