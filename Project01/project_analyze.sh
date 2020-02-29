@@ -88,7 +88,7 @@ j=0
 						mv "$file4" "$path"
 					done
 				else
-					echo "ERROR: This file does not exist"
+					echo "ERROR: This file does not exist."
 				fi
 			fi
 		fi
@@ -96,14 +96,22 @@ j=0
 
 		if [ "$arg" == "custom01" ] ;
                 then
-                        echo "Would you like to see files [Bigger] or [Smaller] than 1MB?"
+                        mkdir zip
+			echo "Would you like to see files [Bigger] or [Smaller] than 1MB?"
 			read gre
 			if [ $gre = "Bigger" ] ;
 			then
-				find .. -type f -size +1048576c "$var"
-				ls "$var"
+				
+				for file5 in $(find .. -type f -size +1M) ; do
+					cp "$file5" zip
+					echo "$file5" >> ziplog.log
+					echo "$file5"
+				done
+				printf "\nFiles added on $(date)"  >> ziplog.log
 				echo "Would you like to zip these files? [Yes] or [No]"
-			
+				
+
+
 			elif [ gre = "Smaller" ] ;
 			then
 				find . -type f -size -1048676c
