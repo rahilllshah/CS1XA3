@@ -83,7 +83,7 @@ I built this website completely from scratch to really show employers what I'm c
 
 - https://www.w3schools.com/html/html_responsive.asp
 - https://www.w3schools.com/jsref/event_preventdefault.asp
-	> Responsiveness
-
+	> Responsiveness 
+ 
 
 
