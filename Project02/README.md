@@ -1,6 +1,6 @@
 # CS 1XA3 Project02 - shahr39
 
-## Introduction 
+## Introduction  
 
 ### My CV/Portfolio
 
