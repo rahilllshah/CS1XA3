@@ -47,6 +47,9 @@ My HTML and CSS are in two seperate files. I have integrated my Javascript into 
 **Particles.js**
 - Experimented with several different shapes and modifications (color, speed, density) and settled for a blueish circles, of a couple different sizes hovering at a decent speed to not be too flashy, yet fulfil the emptiness of the white background.
 
+**Mobile Responsiveness**
+- Implemented event listeners and the console to properly work the navbar sliding in-and-out in mobile view. 
+
 ## BONUS
 - Saw an increase in interviews after integrating this website into my application and resume. Was also commended by recruiters (including Microsoft), co-op advisors, colleagues for my work on it.
 
