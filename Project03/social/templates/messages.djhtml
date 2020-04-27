@@ -41,7 +41,9 @@
           <p>Friend</p>
           {% load static %}
           <img src="{% static 'avatar.png'  %}" alt="Avatar" style="width:50%"><br>
-          <span>TODO Add Friend</span>
+          {% for g in friends %}
+            <span>{{g.user}}</span>
+          {% endfor %}
         </div>
       </div>
       <br>
