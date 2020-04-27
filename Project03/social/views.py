@@ -50,6 +50,32 @@ def account_view(request):
         form = None
 
         # TODO Objective 3: Create Forms and Handle POST to Update UserInfo / Password
+        if request.method == 'POST':
+            #password change
+            if request.POST['action'] == "Change Password":
+                form = PasswordChangeForm(request.user, request.POST)
+                if form.is_valid():
+                    user = form.save()
+                    update_session_auth_hash(request, user)
+                    return redirect('login:login_view')
+            elif request.POST['action'] == 'Submit':
+                employment = request.POST['employment']
+                location = request.POST['location']
+                birthday = request.POST['birthday']
+                new_interest = request.POST['interest']
+                user_info = models.UserInfo.objects.get(user=request.user)
+                if employment:
+                    user_info.employment = employment
+                if location:
+                    user_info.location = location
+                if birthday:
+                    user_info.birthday = birthday
+                if new_interest:
+                    user_info.interests.create(label=new_interest)
+                user_info.save()
+
+        else:
+            form = PasswordChangeForm(request.user)
 
         user_info = models.UserInfo.objects.get(user=request.user)
         context = { 'user_info' : user_info,
@@ -71,15 +97,22 @@ def people_view(request):
     """
     if request.user.is_authenticated:
         user_info = models.UserInfo.objects.get(user=request.user)
+        user_friends = user_info.friends.all()
+        all_people = list(models.UserInfo.objects.all())
+        not_myself = all_people.remove(user_info)
+        only_strangers = [x for x in all_people if x not in user_friends]
+        only_strangers = only_strangers[:(request.session.get('counter',1))]
         # TODO Objective 4: create a list of all users who aren't friends to the current user (and limit size)
-        all_people = []
 
         # TODO Objective 5: create a list of all friend requests to current user
-        friend_requests = []
+        friend_requests = models.FriendRequest.objects.all()
+
 
         context = { 'user_info' : user_info,
                     'all_people' : all_people,
-                    'friend_requests' : friend_requests }
+                    'user_friends' : user_friends,
+                    'only_strangers' : only_strangers,
+                    'friend_requests' : friend_requests,}
 
         return render(request,'people.djhtml',context)
 
@@ -175,6 +208,8 @@ def more_ppl_view(request):
     '''
     if request.user.is_authenticated:
         # update the # of people dispalyed
+        i = request.session.get('counter',1)
+        request.session['counter'] = i+1
 
         # TODO Objective 4: increment session variable for keeping track of num ppl displayed
 
@@ -202,7 +237,15 @@ def friend_request_view(request):
         username = frID[3:]
 
         if request.user.is_authenticated:
+            for user in models.UserInfo.objects.all():
+                if username == str(user.user):
+                    username=user.user
+
             # TODO Objective 5: add new entry to FriendRequest
+            models.FriendRequest.objects.create(to_user=models.UserInfo.objects.get(user=username), from_user=models.UserInfo.objects.get(user=request.user))
+
+
+            
 
             # return status='success'
             return HttpResponse()
@@ -231,6 +274,27 @@ def accept_decline_view(request):
         # TODO Objective 6: parse decision from data
 
         if request.user.is_authenticated:
+            ##Check if it's accept/decline
+            if data.string[0] == "A":
+                username = models.UserInfo.objects.get(user=request.user)
+                frequest = FriendRequest.objects.create(from_user=from_user, to_user=request.user).first()
+                user1=frequest.to_user
+                user2=from_user
+                user1.models.UserInfo.friends.add(request.user)
+                user2.models.UserInfo.friends.add(request.to_user)
+                frequest.delete()
+            else:
+                frequest.delete()
+
+            ##With the username, get the userinfo object just like we did in obj5
+
+
+            ##if you accept, add that person as a friend to request.user, (use the model) friends = models.ManyToManyField('self'). how to add something to manytomany field
+
+
+            ##if they dont accept, delete the friend request, make sure to delete after they accept
+
+
 
             # TODO Objective 6: delete FriendRequest entry and update friends in both Users
 
